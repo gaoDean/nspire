@@ -1,15 +1,8 @@
-.SUFFIXES:
-.SUFFIXES: .lua
+ALL: build
 
-ALL: spin.tns
-
-FILE: spin
-
-out.lua:
-	nspire-merge --out $@ -- spin.lua
-
-%.tns: out.lua
-	luna $< $@
+build:
+	@# nspire-merge -- spin.lua
+	luna spin.lua spin.tns
 
 clean:
 	rm out.lua
