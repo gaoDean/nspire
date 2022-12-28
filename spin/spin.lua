@@ -45,9 +45,9 @@ end
 
 function on.construction()
   local saveState = var.recall("data")
-  if (saveState) {
+  if saveState then
     branches = saveState
-  }
+  end
   window.invalidate()
 end
 
@@ -92,8 +92,8 @@ end
 function on.charIn(char)
   if (char == "+")      then changeBranchDelta(0.1)
   elseif (char == "-")  then changeBranchDelta(-0.1)
-  elseif (char == ")")  then totalLength = totalLength + 10
-  elseif (char == "(")  then totalLength = totalLength - 10
+  elseif (char == "*")  then totalLength = totalLength + 10
+  elseif (char == "/")  then totalLength = totalLength - 10
   end
   window.invalidate()
 end
