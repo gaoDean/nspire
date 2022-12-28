@@ -3,7 +3,7 @@ center = {
   x = window.width() / 2,
   y = window.height() / 2,
 }
-totalLength = window.height() * 0.9
+totalLength = window.height() * 0.7
 
 branches = {
   {
@@ -17,7 +17,6 @@ branches = {
     delta = 5
   }
 }
-
 maxIterations = 600
 
 branchIndex = 1
@@ -27,10 +26,6 @@ function getPoint(origin, angle, radius)
     x = radius * math.cos(angle) + origin.x,
     y = radius * math.sin(angle) + origin.y,
   }
-end
-
-function changeBranchDelta(change)
-  branches[branchIndex].delta = branches[branchIndex].delta + change
 end
 
 function changeBranchLength(change)
@@ -44,10 +39,6 @@ function changeBranchLength(change)
 end
 
 function on.construction()
-  local saveState = var.recall("data")
-  if saveState then
-    branches = saveState
-  end
   window.invalidate()
 end
 
@@ -57,6 +48,8 @@ function on.paint(gc)
   local tmppos = getPoint(center, branches[1].angle, totalLength * branches[1].length)
   local oldTip = getPoint(tmppos, branches[2].angle, totalLength * branches[2].length)
   local starting = oldTip
+  branches[1].angle = 0
+  branches[2].angle = 0
   while (i < maxIterations) do
     branches[1].angle = branches[1].angle + branches[1].delta
     branches[2].angle = branches[2].angle + branches[2].delta
@@ -90,14 +83,25 @@ function on.arrowRight()
 end
 
 function on.charIn(char)
-  if (char == "+")      then changeBranchDelta(0.1)
-  elseif (char == "-")  then changeBranchDelta(-0.1)
+  if (char == "+")      then branches[branchIndex].delta = branches[branchIndex].delta + 0.1
+  elseif (char == "-")  then branches[branchIndex].delta = branches[branchIndex].delta - 0.1
   elseif (char == "*")  then totalLength = totalLength + 10
   elseif (char == "/")  then totalLength = totalLength - 10
+  elseif (char == ")")  then maxIterations = maxIterations + 50
+  elseif (char == "(")  then maxIterations = maxIterations - 50
   end
   window.invalidate()
 end
 
-function on.destroy()
-  var.store("data", branches)
+function on.save()
+  return {
+    branches = branches,
+    totalLength = totalLength,
+  }
+end
+
+function on.restore(data)
+  branches = data.branches
+  totalLength = data.totalLength
+  window.invalidate()
 end
