@@ -1,4 +1,4 @@
-controls
+### controls
 
 - "+" increases branch turn speed
 - "-" decreases branch turn speed
