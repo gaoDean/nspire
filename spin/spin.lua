@@ -43,7 +43,7 @@ local menu = {
   {"Options",
     {"Toggle debug", toggleDebug},
     {"Toggle fast draw", toggleFastDraw},
-    {"Reset variables", resetData}
+    {"Reset variables", resetData},
     {"Reset saves", resetSaves}
   }
 }
