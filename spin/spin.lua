@@ -170,7 +170,7 @@ function on.charIn(char)
   elseif char == "x"    then iterationDelta = iterationDelta + 1
   elseif char == "y"    then iterationDelta = iterationDelta - 1
   elseif char == "."    then recallSave = true
-  elseif char == "-"    then if tmpDataSave then restoreData(tmpDataSave) end
+  elseif char == "−"    then if tmpDataSave then restoreData(tmpDataSave) end -- negate sign
   elseif tonumber(char) then updateSaveSlot(char)
   end
   iterations = 1
@@ -189,6 +189,7 @@ function compileData()
 end
 
 function restoreData(data)
+  message = "restore"
   branches = data.branches
   totalLength = data.totalLength
   saves = data.saves
